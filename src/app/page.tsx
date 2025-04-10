@@ -1,103 +1,152 @@
+"use client";
+import { useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+const darkTheme = {
+  background: "#121212",
+  textColor: "#fff",
+  cardBackground: "#1e1e1e",
+};
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 700px;
+  background: ${({ theme }) => theme.cardBackground};
+  color: ${({ theme }) => theme.textColor};
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Ombre autour du conteneur */
+  text-align: center;
+  transition: background 0.3s, color 0.3s;
+  margin-top: 50px;
+`;
+
+const ProfileImageWrapper = styled.div`
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid ${({ theme }) => theme.textColor};
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre au survol */
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const ProfileImage = styled(Image)`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`;
+
+const Section = styled.section`
+  margin-bottom: 25px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+`;
+
+const SectionTitle = styled.h2`
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: ${({ theme }) => theme.textColor};
+`;
+
+const Button = styled.button`
+  padding: 12px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(45deg, #0070f3, #00c6ff); /* Bouton avec dégradé */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  
+  &:hover {
+    background: linear-gradient(45deg, #0056b3, #00aaff); /* Changement de couleur au survol */
+    transform: scale(1.05);
+  }
+`;
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [theme] = useState(darkTheme); 
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handleClick = () => {
+    router.push('/page2'); // Assurez-vous que cela pointe bien vers /page2
+  };
+
+  return (                        
+    <ThemeProvider theme={theme}>
+      <Container>
+        <ProfileImageWrapper>
+          <ProfileImage src="/profile.jpg" alt="Photo de profil" width={150} height={150} />
+        </ProfileImageWrapper>
+        <h1>Jean-Baptiste Marcant</h1>
+        <p>Étudiant en 1ère année à Enigma</p>
+
+        <Section>
+          <SectionTitle>Formation</SectionTitle>
+          <ul>
+            <li><strong>Enigma</strong> - 1ère année en ingénierie informatique (2024-2025)</li>
+          </ul>
+        </Section>
+
+        <Section>
+          <SectionTitle>Compétences</SectionTitle>
+          <ul>
+            <li>Python, C, JavaScript, Lua</li>
+            <li>HTML, CSS, React</li>
+            <li>Algorithmes et structures de données</li>
+            <li>Travail en équipe, persévérant</li>
+          </ul>
+        </Section>
+
+        <Section>
+          <SectionTitle>Langues</SectionTitle>
+          <ul>
+            <li>Français - Courant</li>
+            <li>Anglais - Intermédiaire</li>
+          </ul>
+        </Section>
+
+        <Section>
+          <SectionTitle>Centre d&apos;intérêt</SectionTitle>
+          <ul>
+            <li>Création de script</li>
+            <li>Jeux vidéos</li>
+            <li>Nouvelles technologies</li>
+            <li>Projets entre amis</li>
+          </ul>
+        </Section>
+
+        <Section>
+          <SectionTitle>Expériences professionnelles</SectionTitle>
+          <ul>
+            <li>Stage au Crédit mutuel Verlinghem juin 2022</li>
+            <li>Créations d&apos;un jeu en lua :</li>
+            <li>- Savoir travailler en équipe sur un projet</li>
+            <li>- Assurer la sécurité du jeu &quot;anticheat&quot;</li>
+            <li>- Savoir coder et apprendre de mes erreurs</li>
+            <li>- Aider l&apos;autre lorsqu&apos;une difficulté est rencontrée</li>
+          </ul>
+        </Section>
+
+        <Section>
+          <SectionTitle>Contact</SectionTitle>
+          <p>Email : jbmarcant@outlook.com</p>
+          <p>Téléphone : 07 81 86 58 76</p>
+        </Section>
+
+        <Button onClick={handleClick}>📧 Me contacter</Button>
+      </Container>
+    </ThemeProvider>
   );
 }
